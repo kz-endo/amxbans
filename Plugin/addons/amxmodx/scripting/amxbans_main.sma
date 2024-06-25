@@ -170,10 +170,16 @@ public plugin_cfg()
 
 public sql_init()
 {
-	new error[128], errno;
-	
+	new host[64], user[64], pass[64], db[64]
+	get_cvar_string("amx_sql_host", host, charsmax(host))
+	get_cvar_string("amx_sql_user", user, charsmax(user))
+	get_cvar_string("amx_sql_pass", pass, charsmax(pass))
+	get_cvar_string("amx_sql_db", db, charsmax(db))
+
+	g_SqlX = SQL_MakeDbTuple(host, user, pass, db)
+
 	SQL_SetAffinity("mysql")
-	g_SqlX = SQL_MakeStdTuple()
+	new error[128], errno
 	new Handle:temp = SQL_Connect(g_SqlX, errno, error, 127)
 	
 	if(temp==Empty_Handle)
